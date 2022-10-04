@@ -7,6 +7,7 @@
 package io.jans.orm.ldap.impl;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import io.jans.orm.annotation.AttributeName;
+import io.jans.orm.reflect.property.Getter;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -657,8 +660,7 @@ public class LdapEntryManager extends BaseEntryManager<LdapOperationService> imp
         return result;
     }
 
-    @Override
-    protected List<AttributeData> getAttributeDataFromLocalizedString(String ldapAttributeName, LocalizedString localizedString) {
+    protected List<AttributeData> getAttributeDataListFromLocalizedString(String ldapAttributeName, LocalizedString localizedString) {
         List<AttributeData> listAttributes = new ArrayList<>();
 
         localizedString.getLanguageTags().forEach(languageTag -> {
@@ -991,6 +993,33 @@ public class LdapEntryManager extends BaseEntryManager<LdapOperationService> imp
     @Override
     protected Object getNativeDateAttributeValue(Date dateValue) {
         return encodeTime(dateValue);
+    }
+
+    @Override
+    protected void addAttributeDataFromLocalizedString(Object entry, Annotation ldapAttribute, String propertyName, List<AttributeData> attributes) {
+        Class<?> entryClass = entry.getClass();
+
+        Getter getter = getGetter(entryClass, propertyName);
+        if (getter == null) {
+            throw new MappingException("Entry should has getter for property " + propertyName);
+        }
+
+        Object propertyValue = getter.get(entry);
+        if (propertyValue == null) {
+            return;
+        }
+
+        if (!(propertyValue instanceof LocalizedString)) {
+            throw new MappingException("Entry property should be LocalizedString");
+        }
+
+        LocalizedString localizedString = (LocalizedString) propertyValue;
+        String ldapAttributeName = ((AttributeName) ldapAttribute).name();
+
+        List<AttributeData> listAttributes = getAttributeDataListFromLocalizedString(ldapAttributeName, localizedString);
+        if (listAttributes != null) {
+            attributes.addAll(listAttributes);
+        }
     }
 
     private static class CountBatchOperation<T> extends DefaultBatchOperation<T> {

@@ -6,27 +6,9 @@
 
 package io.jans.orm.sql.impl;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.Expressions;
-
 import io.jans.orm.PersistenceEntryManager;
 import io.jans.orm.event.DeleteNotifier;
 import io.jans.orm.exception.AuthenticationException;
@@ -37,16 +19,8 @@ import io.jans.orm.exception.operation.SearchException;
 import io.jans.orm.impl.BaseEntryManager;
 import io.jans.orm.impl.GenericKeyConverter;
 import io.jans.orm.impl.model.ParsedKey;
-import io.jans.orm.model.AttributeData;
-import io.jans.orm.model.AttributeDataModification;
+import io.jans.orm.model.*;
 import io.jans.orm.model.AttributeDataModification.AttributeModificationType;
-import io.jans.orm.model.AttributeType;
-import io.jans.orm.model.BatchOperation;
-import io.jans.orm.model.EntryData;
-import io.jans.orm.model.PagedResult;
-import io.jans.orm.model.SearchScope;
-import io.jans.orm.model.SortOrder;
-import io.jans.orm.model.base.LocalizedString;
 import io.jans.orm.reflect.property.PropertyAnnotation;
 import io.jans.orm.search.filter.Filter;
 import io.jans.orm.search.filter.FilterProcessor;
@@ -57,6 +31,16 @@ import io.jans.orm.sql.operation.SqlOperationService;
 import io.jans.orm.sql.operation.impl.SqlConnectionProvider;
 import io.jans.orm.util.ArrayHelper;
 import io.jans.orm.util.StringHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
+import java.util.*;
+import java.util.function.Function;
 
 /**
  * SQL Entry Manager
@@ -146,7 +130,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
             if (ArrayHelper.isEmpty(objectClassesFromDb)) {
                 throw new UnsupportedOperationException(String.format("There is no attribute with objectClasses in DB! Entry is invalid: '%s'", entry));
             }
-            
+
             // We need to check only first element of each array because objectCLass in SQL is single value attribute
             if (!StringHelper.equals(getBaseObjectClass(entryClass, objectClassesFromDb), getBaseObjectClass(entryClass, objectClasses))) {
             	throw new UnsupportedOperationException(String.format("It's not possible to change objectClasses of already persisted entry! Entry is invalid: '%s'", entry));
@@ -245,7 +229,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
                     oldAttributeName = oldAttribute.getName();
                     oldAttributeValues = oldAttribute.getValues();
                 }
-                
+
                 AttributeDataModification modification = null;
                 AttributeModificationType modificationType = attributeDataModification.getModificationType();
 				if ((AttributeModificationType.ADD == modificationType) ||
@@ -359,10 +343,10 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
 		} catch (SearchException ex) {
             throw new EntryDeleteException(String.format("Failed to convert filter '%s' to expression", searchFilter), ex);
 		}
-        
+
         try {
         	int processed = (int) getOperationService().delete(keyWithInum.getKey(), getBaseObjectClass(entryClass, objectClasses), convertedExpression, count);
-        	
+
         	return processed;
         } catch (Exception ex) {
             throw new EntryDeleteException(String.format("Failed to delete entries with key: '%s', expression: '%s'", keyWithInum.getKey(), convertedExpression), ex);
@@ -465,7 +449,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
 
             if (ArrayHelper.isEmpty(defaultSort)) {
                 defaultSort = new OrderSpecifier[] { requestedSort };
-            } else { 
+            } else {
                 defaultSort = ArrayHelper.arrayMerge(new OrderSpecifier[] { requestedSort }, defaultSort);
             }
         }
@@ -563,7 +547,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
         for (int i = 0; i < searchResultEntries.length; i++) {
             count++;
             EntryData entryData = searchResultEntries[i];
-            
+
             AttributeData attributeDataDn = entryData.getAttributeDate(SqlOperationService.DN);
             if ((attributeDataDn == null) || (attributeDataDn.getValue() == null)) {
                 throw new MappingException("Failed to convert EntryData to Entry because DN is missing");
@@ -600,7 +584,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
         checkEntryClass(entryClass, false);
         String[] objectClasses = getTypeObjectClasses(entryClass);
         List<PropertyAnnotation> propertiesAnnotations = getEntryPropertyAnnotations(entryClass);
-        
+
         // Find entries
         Filter searchFilter = Filter.createEqualityFilter(Filter.createLowercaseFilter(SqlOperationService.UID), StringHelper.toLowerCase(userName));
         if (objectClasses.length > 0) {
@@ -677,7 +661,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
         checkEntryClass(entryClass, false);
         String[] objectClasses = getTypeObjectClasses(entryClass);
         List<PropertyAnnotation> propertiesAnnotations = getEntryPropertyAnnotations(entryClass);
-        
+
         // Find entries
         Filter searchFilter;
         if (objectClasses.length > 0) {
@@ -717,7 +701,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
         }
 
         escapeValues(realValues);
-        
+
         if (Boolean.TRUE.equals(multiValued)) {
             return new AttributeDataModification(type, new AttributeData(realAttributeName, realValues, multiValued));
         } else {
@@ -744,7 +728,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
         String[] sortByProperties = getEntrySortByNames(entryClass);
 
         if (ArrayHelper.isEmpty(sortByProperties)) {
-        	// Fall back to sortBy property name 
+        	// Fall back to sortBy property name
             sortByProperties = getEntrySortByProperties(entryClass);
             if (ArrayHelper.isEmpty(sortByProperties)) {
             	return null;
@@ -778,7 +762,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
             if (entry != null) {
                 return entry;
             }
-            
+
             return null;
         } catch (Exception ex) {
             throw new EntryPersistenceException(String.format("Failed to find entry: '%s'", dn), ex);
@@ -894,7 +878,7 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
 		if (SqlEntryManagerFactory.PERSISTENCE_TYPE.equals(persistenceType)) {
 			return this;
 		}
-		
+
 		return null;
 	}
 
@@ -961,28 +945,13 @@ public class SqlEntryManager extends BaseEntryManager<SqlOperationService> imple
 		TableMapping tableMapping = sqlConnectionProvider.getTableMappingByKey(primaryKey, getBaseObjectClass(objectClasses));
 		Map<String, AttributeType> columTypes = tableMapping.getColumTypes();
 		AttributeType attributeType = columTypes.get(propertyName.toLowerCase());
-		
+
 		return attributeType;
 	}
 
 	protected boolean isSupportForceUpdate() {
 		return true;
 	}
-
-    @Override
-    protected List<AttributeData> getAttributeDataFromLocalizedString(String ldapAttributeName, LocalizedString localizedString) {
-        List<AttributeData> listAttributes = new ArrayList<>();
-
-        localizedString.getLanguageTags().forEach(languageTag -> {
-            String value = localizedString.getValue(languageTag);
-            String key = localizedString.addLdapLanguageTag(ldapAttributeName, languageTag);
-            AttributeData attributeData = new AttributeData(key, value);
-
-            listAttributes.add(attributeData);
-        });
-
-        return listAttributes;
-    }
 
 	private String getBaseObjectClass(String[] objectClasses) {
 		if (ArrayHelper.isEmpty(objectClasses)) {
