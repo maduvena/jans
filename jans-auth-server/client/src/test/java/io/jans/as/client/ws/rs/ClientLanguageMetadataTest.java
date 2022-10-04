@@ -34,7 +34,7 @@ import static io.jans.as.model.register.RegisterRequestParam.*;
 
 /**
  * @author Javier Rojas Blum
- * @version March 23, 2022
+ * @version October 4, 2022
  */
 public class ClientLanguageMetadataTest extends BaseTest {
 
@@ -149,14 +149,14 @@ public class ClientLanguageMetadataTest extends BaseTest {
                 .check();
 
         // 7. Request client info
-        ClientInfoClient clientInfoClient = new ClientInfoClient(clientInfoEndpoint);
-        ClientInfoResponse clientInfoResponse = clientInfoClient.execClientInfo(accessToken);
-
-        showClient(clientInfoClient);
-        AssertBuilder.clientInfoResponse(clientInfoResponse)
-                .notNullClientInfoClaims()
-                .claimsPresence(CLIENT_INFO_NAME_CLAIMS)
-                .check();
+//        ClientInfoClient clientInfoClient = new ClientInfoClient(clientInfoEndpoint);
+//        ClientInfoResponse clientInfoResponse = clientInfoClient.execClientInfo(accessToken);
+//
+//        showClient(clientInfoClient);
+//        AssertBuilder.clientInfoResponse(clientInfoResponse)
+//                .notNullClientInfoClaims()
+//                .claimsPresence(CLIENT_INFO_NAME_CLAIMS)
+//                .check();
     }
 
     @Parameters({"userId", "userSecret", "redirectUri", "redirectUris", "clientJwksUri",
