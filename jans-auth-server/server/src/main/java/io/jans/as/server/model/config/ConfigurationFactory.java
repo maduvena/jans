@@ -578,9 +578,11 @@ public class ConfigurationFactory {
     }
 
     public void loadCryptoConfigurationSalt() {
+        log.debug("[TEST]:::" + saltFilePath);
         try {
             FileConfiguration cryptoConfiguration = createFileConfiguration(saltFilePath, true);
             this.cryptoConfigurationSalt = cryptoConfiguration.getString("encodeSalt");
+            log.debug("TEST[]:::cryptoConfigurationSalt: " + cryptoConfigurationSalt);
         } catch (Exception ex) {
             if (log.isErrorEnabled())
                 log.error("Failed to load configuration from {}", saltFilePath, ex);
