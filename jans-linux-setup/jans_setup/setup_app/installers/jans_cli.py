@@ -18,7 +18,7 @@ from pathlib import Path
 class JansCliInstaller(BaseInstaller, SetupUtils):
 
     source_files = [
-                (os.path.join(Config.dist_jans_dir, 'jca-swagger-client.zip'), os.path.join(base.current_app.app_info['EXTERNAL_LIBS'], 'cli-swagger/jca_swagger_client.zip')),
+                (os.path.join(Config.dist_jans_dir, 'jca-swagger-client.zip'), os.path.join(base.current_app.app_info['EXTERNAL_LIBS'], 'cli-swagger/v2/jca_swagger_client.zip')),
                 (os.path.join(Config.dist_jans_dir, 'scim-swagger-client.zip'), os.path.join(base.current_app.app_info['EXTERNAL_LIBS'], 'cli-swagger/scim_swagger_client.zip')),
                 (os.path.join(Config.dist_app_dir, 'pyjwt.zip'), base.current_app.app_info['PYJWT']),
                 ]
@@ -66,7 +66,7 @@ class JansCliInstaller(BaseInstaller, SetupUtils):
         base.extract_from_zip(self.source_files[2][0], 'jwt', os.path.join(self.jans_cli_install_dir, 'pylib/jwt'))
 
         # extract yaml files
-        base.extract_file(base.current_app.jans_zip, 'jans-config-api/docs/jans-config-api-swagger.yaml', os.path.join(self.jans_cli_install_dir, 'jca.yaml'), ren=True)
+        base.extract_file(base.current_app.jans_zip, 'jans-config-api/docs/jans-config-api-swagger-auto.yaml', os.path.join(self.jans_cli_install_dir, 'jca.yaml'), ren=True)
         base.extract_file(base.current_app.jans_zip, 'jans-scim/server/src/main/resources/jans-scim-openapi.yaml', os.path.join(self.jans_cli_install_dir, 'scim.yaml'), ren=True)
 
 

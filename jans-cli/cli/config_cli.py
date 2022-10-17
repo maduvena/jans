@@ -42,7 +42,7 @@ except ModuleNotFoundError:
 tabulate_endpoints = {
     'jca.get-config-scripts': ['scriptType', 'name', 'enabled', 'inum'],
     'jca.get-user': ['inum', 'userId', 'mail','sn', 'givenName', 'jansStatus'],
-    'jca.get-all-attribute': ['inum', 'name', 'displayName', 'status', 'dataType', 'claimName'],
+    'jca.get-attributes': ['inum', 'name', 'displayName', 'status', 'dataType', 'claimName'],
     'jca.get-oauth-openid-clients': ['inum', 'displayName', 'clientName', 'applicationType'],
     'jca.get-oauth-scopes': ['dn', 'id', 'scopeType'],
     'jca.get-oauth-uma-resources': ['dn', 'name', 'expirationDate'],
@@ -311,7 +311,8 @@ class JCA_CLI:
 
         if my_op_mode == 'scim':
             self.swagger_configuration.host += '/jans-scim/restv1/v2'
-
+        else:
+            self.swagger_configuration.host += '/jans-config-api'
         self.ssl_settings()
 
         self.swagger_configuration.debug = debug
