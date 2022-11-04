@@ -10,7 +10,13 @@ HTTP operations supported
 
 ## GET - Gets list of OpenID Connect clients
 *path:* /jans-config-api/api/v1/openid/clients
-![Parameters](https://github.com/JanssenProject/jans/raw/main/docs/assets/config-api/openid-client-parameters.png)
+![Parameters]
+| Name      | Type | Description |
+| ----------- | ----------- |
+| limit      | Title       |
+| Paragraph   | Text        |
+
+
 ![Response](https://github.com/JanssenProject/jans/raw/main/docs/assets/config-api/openid-client-json1.png)
 (https://github.com/JanssenProject/jans/raw/main/docs/assets/config-api/openid-client-json2.png)
 
