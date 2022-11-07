@@ -121,7 +121,7 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 
 > | name       |  param type | data type      | type      |default value | description                            |
 > |------------|-------------|----------------|-----------|--------------|----------------------------------------|
-> | `inum`     |  path       | string         | required  | NA           | The specific stub unique idendifier    |
+> | `inum`     |  path       | string         | required  | NA           | Attribute unique idendifier            |
 
 ##### Responses
 
