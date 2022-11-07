@@ -31,7 +31,7 @@ Learn more in the [jans-config-api documentation](https://gluu.org/swagger-ui/?u
 ### Endpoints
 #### Attribute
 Attributes are individual pieces of user data, like uid or email, that are required by applications in order to identify a user and grant access to protected resources.
-![Refer] (/attribute.md) for more details.
+![Refer] (./attribute.md) for more details.
 
 #### Default Authentication Method
 Attributes are individual pieces of user data, like uid or email, that are required by applications in order to identify a user and grant access to protected resources.
