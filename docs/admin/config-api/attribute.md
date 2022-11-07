@@ -11,7 +11,7 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 ##### Parameters
 
 > | name       |  param type | data type      | type      |default value | description                                                                     |
-> |------------|-------------|----------------|-----------|------------------------------------------------------------------------------------------------|
+> |------------|-------------|----------------|-----------|--------------|---------------------------------------------------------------------------------|
 > | limit      |  query      | integer        | optional  |50            |Search size - max size of the results to return                                  |
 > | pattern    |  query      | string         | optional  |N/A           |Comma seperated search patter. E.g. `pattern=edu`, `pattern=edu,locale,License`  |
 > | status     |  query      | string         | optional  |all           |Search size - max size of the results to return                                  |
@@ -115,12 +115,12 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 
 
 <details>
-  <summary><code>GET</code> <code><b>/{uuid}</b></code> <code>(gets attribute based on inum)</code></summary>
+  <summary><code>GET</code> <code><b>/{inum}</b></code> <code>(gets attribute based on inum)</code></summary>
 
 ##### Parameters
 
 > | name       |  param type | data type      | type      |default value | description                            |
-> |------------|-------------|----------------|-----------|-------------------------------------------------------|
+> |------------|-------------|----------------|-----------|--------------|----------------------------------------|
 > | `inum`     |  path       | string         | required  | NA           | The specific stub unique idendifier    |
 
 ##### Responses
@@ -182,12 +182,12 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 #### Creating new attribute
 
 <details>
-  <summary><code>POST</code> <code><b>/{uuid}</b></code> <code>(creates a new attribute)</code></summary>
+  <summary><code>POST</code> <code><b>/{inum}</b></code> <code>(creates a new attribute)</code></summary>
 
 ##### Parameters
 
 > | name       |  param type | data type      | type      |default value | description                            |
-> |------------|-------------|----------------|-----------|-------------------------------------------------------|
+> |------------|-------------|----------------|-----------|--------------|----------------------------------------|
 > | None       |  request    | object (JSON)  | required  | NA           | Attribute json                         |
 
 ##### Responses
@@ -244,12 +244,12 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 #### Updating existing attribute
 
 <details>
-  <summary><code>PUT</code> <code><b>/{uuid}</b></code> <code>(updates an existings attribute)</code></summary>
+  <summary><code>PUT</code> <code><b>/{inum}</b></code> <code>(updates an existings attribute)</code></summary>
 
 ##### Parameters
 
 > | name       |  param type | data type      | type      |default value | description                            |
-> |------------|-------------|----------------|-----------|-------------------------------------------------------|
+> |------------|-------------|----------------|-----------|--------------|----------------------------------------|
 > | None       |  request    | object (JSON)  | required  | NA           | Attribute json                         |
 
 ##### Responses
@@ -312,12 +312,12 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 #### Patching existing attribute
 
 <details>
-  <summary><code>PATCH</code> <code><b>/{uuid}</b></code> <code>(patches an existings attribute)</code></summary>
+  <summary><code>PATCH</code> <code><b>/{inum}</b></code> <code>(patches an existings attribute)</code></summary>
 
 ##### Parameters
 
 > | name       |  param type | data type          | type      |default value | description                            |
-> |------------|-------------|--------------------|-----------|-------------------------------------------------------|
+> |------------|-------------|--------------------|-----------|--------------|----------------------------------------|
 > | inum       |  path       | string             | required  | NA           | Attribute unique idendifier            |
 > | None       |  request    | json-patch object  | required  | NA           | json-patch request                     |
 
@@ -350,12 +350,12 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 #### Deleting existing attribute
 
 <details>
-  <summary><code>DELETE</code> <code><b>/{uuid}</b></code> <code>(deletes an existings attribute)</code></summary>
+  <summary><code>DELETE</code> <code><b>/{inum}</b></code> <code>(deletes an existings attribute)</code></summary>
 
 ##### Parameters
 
 > | name       |  param type | data type          | type      |default value | description                            |
-> |------------|-------------|--------------------|-----------|-------------------------------------------------------|
+> |------------|-------------|--------------------|-----------|--------------|----------------------------------------|
 > | inum       |  path       | string             | required  | NA           | Attribute unique idendifier            |
 
 
