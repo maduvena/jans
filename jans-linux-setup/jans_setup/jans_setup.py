@@ -397,6 +397,7 @@ def main():
                     not Config.installed_instance and Config.get(configApiInstaller.install_var)):
                 configApiInstaller.start_installation()
                 if argsp.t or getattr(argsp, 'load_config_api_test', None):
+                    
                     configApiInstaller.load_test_data()
 
             if Config.profile == 'jans':
@@ -430,17 +431,26 @@ def main():
 
             jansInstaller.post_install_tasks()
 
+
+            if Config.opendj_install:
+                openDjInstaller.stop()
+                openDjInstaller.start()
+                time.sleep(3)
+
+            if argsp.t:
+                base.logIt("Loading test data")
+                testDataLoader.load_test_data()
+
             for service in jansProgress.services:
+                if service['name'] == openDjInstaller.service_name:
+                    continue
+
                 if service['app_type'] == static.AppType.SERVICE:
                     jansProgress.progress(PostSetup.service_name,
                                           "Starting {}".format(service['name'].replace('-', ' ').replace('_', ' ').title()))
                     time.sleep(2)
                     service['object'].stop()
                     service['object'].start()
-
-            if argsp.t:
-                base.logIt("Loading test data")
-                testDataLoader.load_test_data()
 
             jansProgress.progress(static.COMPLETED)
 
