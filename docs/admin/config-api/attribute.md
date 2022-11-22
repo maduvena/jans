@@ -1,3 +1,10 @@
+---
+tags:
+  - administration
+  - config-api
+  - endpoints
+---
+
 # Attributes (original SAML jargon) or "user claims" (OpenID jargon)
 
 Attributes are individual pieces of user data, like uid or email, that are required by applications in order to identify a user and grant access to protected resources.
