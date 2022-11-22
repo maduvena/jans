@@ -21,10 +21,10 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 > | name       |  param type | data type      | type      |default value | description                                                                     |
 > |------------|-------------|----------------|-----------|--------------|---------------------------------------------------------------------------------|
 > | limit      |  query      | integer        | optional  |50            |Search size - max size of the results to return                                  |
-> | pattern    |  query      | string         | optional  |N/A           |Comma seperated search patter. E.g. `pattern=edu`, `pattern=edu,locale,License`  |
+> | pattern    |  query      | string         | optional  |N/A           |Comma separated search patter. E.g. `pattern=edu`, `pattern=edu,locale,License`  |
 > | status     |  query      | string         | optional  |all           |Search size - max size of the results to return                                  |
 > | startIndex |  query      | integer        | optional  |1             |Index of the first query result                                                  |
-> | sortBy     |  query      | string         | optional  |inum          |Attribute whose value will be used to order the returned response                |
+> | sortBy     |  query      | string         | optional  |inum          |Field whose value will be used to order the returned response                |
 > | sortOrder  |  query      | string         | optional  |ascending     |Search size - max size of the results to return                                  |
 
 
@@ -252,7 +252,7 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 #### Updating existing attribute
 
 <details>
-  <summary><code>PUT</code> <code><b>/{inum}</b></code> <code>(updates an existings attribute)</code></summary>
+  <summary><code>PUT</code> <code><b>/{inum}</b></code> <code>(updates an existing attribute)</code></summary>
 
 ##### Parameters
 
@@ -320,7 +320,7 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 #### Patching existing attribute
 
 <details>
-  <summary><code>PATCH</code> <code><b>/{inum}</b></code> <code>(patches an existings attribute)</code></summary>
+  <summary><code>PATCH</code> <code><b>/{inum}</b></code> <code>(patches an existing attribute)</code></summary>
 
 ##### Parameters
 
@@ -358,7 +358,7 @@ Attributes are individual pieces of user data, like uid or email, that are requi
 #### Deleting existing attribute
 
 <details>
-  <summary><code>DELETE</code> <code><b>/{inum}</b></code> <code>(deletes an existings attribute)</code></summary>
+  <summary><code>DELETE</code> <code><b>/{inum}</b></code> <code>(deletes an existing attribute)</code></summary>
 
 ##### Parameters
 
