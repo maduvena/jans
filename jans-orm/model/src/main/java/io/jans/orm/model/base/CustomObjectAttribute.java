@@ -89,7 +89,8 @@ public class CustomObjectAttribute implements Serializable, Comparable<CustomObj
         }
 
         if (values.size() == 1) {
-            return (values.get(0)!=null ? values.get(0).toString() : "");
+            System.out.println("\n\n\n\n *********************** CustomObjectAttribute::getDisplayValue() - values.size() = "+values.size()+" , values.get(0) = "+values.get(0)+"***********************");
+            return (values.get(0)!=null  ? values.get(0).toString() : "");
         }
 
         StringBuilder sb = new StringBuilder();
