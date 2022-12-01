@@ -4840,6 +4840,30 @@ paths:
       security:
       - oauth2:
         - https://jans.io/oauth/config/organization.write
+  /api/v1/plugin:
+    get:
+      tags:
+      - Plugins
+      summary: Returns deployed plugin details
+      description: Returns deployed plugin details
+      operationId: get-plugin-details
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonNode'
+              examples:
+                Response json example:
+                  description: Response json example
+                  value: |
+                    {
+                        "status": "running",
+                        "db_status": "online"
+                    }
+        "500":
+          description: InternalServerError
   /api/v1/scopes:
     get:
       tags:
@@ -7083,17 +7107,17 @@ components:
           type: string
         whitePagesCanView:
           type: boolean
+        adminCanEdit:
+          type: boolean
+        adminCanAccess:
+          type: boolean
         userCanView:
+          type: boolean
+        adminCanView:
           type: boolean
         userCanEdit:
           type: boolean
         userCanAccess:
-          type: boolean
-        adminCanAccess:
-          type: boolean
-        adminCanView:
-          type: boolean
-        adminCanEdit:
           type: boolean
         baseDn:
           type: string

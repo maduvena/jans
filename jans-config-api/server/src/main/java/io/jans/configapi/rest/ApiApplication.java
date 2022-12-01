@@ -119,6 +119,7 @@ public class ApiApplication extends Application {
         classes.add(OrganizationResource.class);
         classes.add(AgamaResource.class);
         classes.add(SessionResource.class);
+        classes.add(PluginResource.class);
 
         return classes;
     }
