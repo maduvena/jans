@@ -4,10 +4,11 @@ tags:
 - installation
 - quick-start
 - docker compose
+- docker image
 ---
 
-!!! Warning 
-    **This image is for testing and development purposes only. Use Janssen [helm charts](https://github.com/JanssenProject/jans/tree/main/charts/janssen) for production setups.**
+> **Warning**
+> This image is for testing and development purposes only. Use Janssen [helm charts](https://github.com/JanssenProject/jans/tree/main/charts/janssen) for production setups.
 
 ## Overview
 
@@ -93,3 +94,4 @@ Remove setup and volumes
 ```
 docker compose -f jans-mysql-compose.yml down
 ```
+
