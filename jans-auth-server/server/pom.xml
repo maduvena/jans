@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>io.jans</groupId>
 		<artifactId>jans-auth-server-parent</artifactId>
-		<version>1.0.6-SNAPSHOT</version>
+		<version>1.0.6.mysql-SNAPSHOT</version>
 	</parent>
 
 	<prerequisites>
@@ -309,6 +309,11 @@
 			<groupId>io.jans</groupId>
 			<artifactId>jans-auth-static</artifactId>
 		</dependency>
+  <dependency>
+    <groupId>software.aws.rds</groupId>
+    <artifactId>aws-mysql-jdbc</artifactId>
+    <version>1.1.2</version>
+  </dependency>
 
 		<!-- jans -->
 		<dependency>
@@ -396,7 +401,7 @@
         <dependency>
             <groupId>io.jans</groupId>
             <artifactId>agama-engine</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.6-SNAPSHOT</version>
         </dependency>
 
 		<!-- Weld -->

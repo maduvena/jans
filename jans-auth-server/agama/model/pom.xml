@@ -9,7 +9,7 @@
     <parent>
         <groupId>io.jans</groupId>
         <artifactId>jans-auth-server-parent</artifactId>
-        <version>1.0.6-SNAPSHOT</version>
+        <version>1.0.6.mysql-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -21,6 +21,7 @@
         <dependency>
             <groupId>io.jans</groupId>
             <artifactId>jans-doc</artifactId>
+            <version>${jans-core.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jans</groupId>
